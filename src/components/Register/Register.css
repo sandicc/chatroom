@@ -1,0 +1,20 @@
+.registerContainer {
+    border: 5px solid black;
+    width: 20em;
+    margin: auto;
+    padding: 1em;
+}
+
+.registerContainer  * {
+    padding: 10px;
+}
+
+.registerContainer input,label {
+    display: block;
+    margin: auto;
+}
+
+.registerContainer h2 {
+    margin: 0;
+}
+

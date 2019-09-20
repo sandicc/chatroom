@@ -1,0 +1,12 @@
+.navContainer {
+    text-align: left;
+}
+.navContainer li {
+  display: inline-block;
+  margin: 10px;
+}
+
+.navContainer li:hover {
+    color: grey;
+    cursor: pointer;
+}
