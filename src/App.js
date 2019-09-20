@@ -47,7 +47,7 @@ class App extends React.Component {
       this.socket.emit('authentication','hello');
       this.socket.on('update', (data) => {
         this.setState({
-          messages: this.state.messages.concat(data.messages),
+          messages: [...this.state.messages, ...data.messages],
           onlineUsers: data.onlineUsers
         });
       })
