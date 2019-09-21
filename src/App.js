@@ -7,6 +7,16 @@ import Register from './components/Register/Register';
 import ChatWindow from './components/ChatWindow/ChatWindow';
 import io from 'socket.io-client';
 
+const initialState = {
+  route: 'login',
+  user: {
+    username: '',
+    password: ''
+  },
+  messages: [],
+  onlineUsers : [],
+  signedIn: false,
+};
 
 class App extends React.Component {
   socket = '';
@@ -14,16 +24,7 @@ class App extends React.Component {
 
   constructor() {
     super();
-    this.state = {
-      route: 'login',
-      user: {
-        username: '',
-        password: ''
-      },
-      messages: [],
-      onlineUsers : [],
-      signedIn: false,
-    };
+    this.state = initialState;
     
   }
 
@@ -47,12 +48,14 @@ class App extends React.Component {
       this.socket.emit('authentication','hello');
       this.socket.on('update', (data) => {
         this.setState({
+          signedIn: true,
           messages: [...this.state.messages, ...data.messages],
           onlineUsers: data.onlineUsers
         });
       })
     }else{
-      this.setState({signedIn: false});
+      this.socket.close();
+      this.setState(initialState);
     }
     this.setState({route: route});
   }
