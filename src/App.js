@@ -19,7 +19,7 @@ const initialState = {
 };
 
 class App extends React.Component {
-  socket = '';
+  socket = null;
   host = 'localhost:3001';
 
   constructor() {
@@ -33,31 +33,43 @@ class App extends React.Component {
       case 'login':
         return <LogIn onRouteChange={this.onRouteChange}/>
       case 'register':
-        return <Register onRouteChange={this.onRouteChange}/>
+        return <Register host={this.host} onRouteChange={this.onRouteChange}/>
       case 'home':
-        return <ChatWindow messages={this.state.messages} onlineUsers={this.state.onlineUsers}/>
+        return <ChatWindow  messages={this.state.messages} onlineUsers={this.state.onlineUsers}/>
       default:
         return <h1>Wrong route</h1>
     }
   }
 
+  socketInit = (dest) => {
+    if(this.socket !== null) return this.socket;
+    const socket = io(this.host, {secure: true});
+    socket.on('connect', () => this.setState({
+      signedIn: true,
+      route: 'home'
+    }));
+    
+    socket.on('update', (data) => {
+      this.setState({
+        signedIn: true,
+        messages: [...this.state.messages, ...data.messages],
+        onlineUsers: data.onlineUsers
+      });
+    })
+    return socket;
+  }
+
   onRouteChange = (route) => {
     if(route === 'home'){
-      this.setState({signedIn: true})
-      this.socket = io(this.host, {secure: true});
-      this.socket.emit('authentication','hello');
-      this.socket.on('update', (data) => {
-        this.setState({
-          signedIn: true,
-          messages: [...this.state.messages, ...data.messages],
-          onlineUsers: data.onlineUsers
-        });
-      })
+      this.socket = this.socketInit(this.host);
     }else{
-      this.socket.close();
+      if(this.state.route === 'home') {
+        this.socket.close();
+        this.socket = null;
+      }
       this.setState(initialState);
+      this.setState({route: route});
     }
-    this.setState({route: route});
   }
 
   render () {
