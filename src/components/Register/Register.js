@@ -33,10 +33,11 @@ class Register extends React.Component {
             body: JSON.stringify(this.state)
         }).then(response => response.json())
         .then(data => {
-            if(data.insertSuccesful){
+            if(data.insertSuccessful) {
+                this.props.setUser(this.state.username, this.state.password);
                 this.props.onRouteChange('home');
-            }else{
-                alert('Username/email already used!!!');
+            }else{ 
+                alert('Register failed!!!');
             }
         })
         .catch(err => console.log('error fetching /register'))
