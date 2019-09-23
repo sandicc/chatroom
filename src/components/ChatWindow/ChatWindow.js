@@ -8,13 +8,15 @@ class ChatWindow extends React.Component {
         this.state = {
             input: ''
         }
+        this.ul = React.createRef();
     }
 
     onKeyUp = (event) => {
-        console.log(event.target.value);
         // check if pressed key is enter
         if((event.which || event.keyCode) === 13){
+            this.props.sendMessage(this.state.input);
             event.target.value = '';
+            this.setState({input: ''});
         }else{
             this.setState({input: event.target.value});
         }
@@ -38,7 +40,7 @@ class ChatWindow extends React.Component {
             <div className="chat">
                 <div className="usersContainer">
                     <p>Online</p>
-                    <ul className="outputField">
+                    <ul ref={this.ul} className="outputField">
                         {this.onlineUsersRender(this.props.onlineUsers)}
                     </ul>
                 </div>

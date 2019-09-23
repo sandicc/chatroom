@@ -35,10 +35,15 @@ class App extends React.Component {
       case 'register':
         return <Register host={this.host} setUser={this.setUser} onRouteChange={this.onRouteChange}/>
       case 'home':
-        return <ChatWindow  messages={this.state.messages} onlineUsers={this.state.onlineUsers}/>
+        return <ChatWindow  sendMessage={this.sendMessage} messages={this.state.messages} onlineUsers={this.state.onlineUsers}/>
       default:
         return <h1>Wrong route</h1>
     }
+  }
+
+  sendMessage = (message) => {
+    this.socket.emit('message', {message:message});
+    console.log(message)
   }
 
   socketInit = (dest) => {
@@ -53,6 +58,11 @@ class App extends React.Component {
     });
     
     socket.on('update', (data) => {
+      if(data.messages.length &&
+      this.state.messages.length &&
+      data.messages[0].id === this.state.messages[this.state.messages.length - 1].id){
+        data.messages.shift();
+      }
       this.setState({
         signedIn: true,
         messages: [...this.state.messages, ...data.messages],
