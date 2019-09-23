@@ -35,7 +35,7 @@ class Register extends React.Component {
         .then(data => {
             if(data.insertSuccessful) {
                 this.props.setUser(this.state.username, this.state.password);
-                this.props.onRouteChange('home');
+                this.props.socketInit(this.props.host);
             }else{ 
                 alert('Register failed!!!');
             }

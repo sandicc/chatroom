@@ -8,10 +8,9 @@ import ChatWindow from './components/ChatWindow/ChatWindow';
 import io from 'socket.io-client';
 
 const initialState = {
-  route: 'login',
+  route: 'entry',
   messages: [],
   onlineUsers : [],
-  signedIn: false,
 };
 
 class App extends React.Component {
@@ -31,11 +30,13 @@ class App extends React.Component {
   renderPage(route) {
     switch (route) {
       case 'login':
-        return <LogIn host={this.host} setUser={this.setUser} onRouteChange={this.onRouteChange}/>
+        return <LogIn host={this.host} socketInit={this.socketInit} setUser={this.setUser} onRouteChange={this.onRouteChange}/>
       case 'register':
-        return <Register host={this.host} setUser={this.setUser} onRouteChange={this.onRouteChange}/>
+        return <Register host={this.host} socketInit={this.socketInit} setUser={this.setUser} onRouteChange={this.onRouteChange}/>
       case 'home':
         return <ChatWindow  sendMessage={this.sendMessage} messages={this.state.messages} onlineUsers={this.state.onlineUsers}/>
+      case 'entry':
+        break;
       default:
         return <h1>Wrong route</h1>
     }
@@ -47,13 +48,9 @@ class App extends React.Component {
   }
 
   socketInit = (dest) => {
-    if(this.socket !== null) return this.socket;
-    const socket = io(this.host, {secure: true});
+    if(this.socket !== null) return;
+    const socket = io(dest, {secure: true});
     socket.on('connect', () => {
-      this.setState({
-        signedIn: true,
-        route: 'home'
-      })
       socket.emit('authentication', {username: this.user.username, password: this.user.password});
     });
     
@@ -64,13 +61,24 @@ class App extends React.Component {
         data.messages.shift();
       }
       this.setState({
-        signedIn: true,
         messages: [...this.state.messages, ...data.messages],
         onlineUsers: data.onlineUsers
       });
     })
 
-    return socket;
+    socket.on('disconnect', (reason) => {
+      if (reason === 'io server disconnect') {
+        console.log(reason);
+        this.onLogOut();
+      }
+    })
+
+    socket.on('authentication', ({auth}) => {
+      console.log('entry')
+      if(auth) this.onRouteChange('home');
+    })
+
+    this.socket = socket;
   }
 
   setUser = (username,password) => {
@@ -80,22 +88,25 @@ class App extends React.Component {
     }
   }
 
+  onLogOut = () => {
+    this.socket.close();
+    this.socket = null;
+    this.setState(initialState);
+    this.setState({route: 'login'});
+    this.user = {
+      username: '',
+      password: ''
+    }
+    this.onRouteChange('login');
+  }
+
   onRouteChange = (route) => {
     switch(route){
       case 'home':
-        this.socket = this.socketInit(this.host);
+        // this.socketInit(this.host);
         break;
 
       case 'login':
-        if(this.state.route === 'home'){
-          this.socket.close();
-          this.socket = null;
-          this.setState(initialState);
-          this.user = {
-            username: '',
-            password: ''
-          }
-        }
         break;
 
       case 'register':
@@ -111,8 +122,10 @@ class App extends React.Component {
     return (
       <div className="App">
         <div id="background"></div>
-        <Navigation onRouteChange={this.onRouteChange} signedIn={this.state.signedIn}/>
-        <Header/>
+        {this.state.route !== 'entry' 
+          ? <Navigation onRouteChange={this.onRouteChange} route={this.state.route} onLogOut={this.onLogOut}/> 
+          : null}
+        <Header onRouteChange={this.onRouteChange} route={this.state.route}/>
         {this.renderPage(this.state.route)}
       </div>
     )

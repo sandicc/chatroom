@@ -32,7 +32,7 @@ class LogIn extends React.Component {
             if(data.loginSuccessful) {
                 this.props.setUser(this.state.username, this.state.password);
                 console.log(this.props)
-                this.props.onRouteChange('home');
+                this.props.socketInit(this.props.host);
             }else{ 
                 alert('Login failed!!!');
             }

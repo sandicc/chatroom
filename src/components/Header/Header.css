@@ -1,0 +1,17 @@
+.normalH1 {
+    font-size: 2em;
+}
+
+.entryH1 {
+    font-size: 8vw;
+    width: 100%;
+    margin: auto;
+}
+
+.centerParent {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }

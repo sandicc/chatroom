@@ -1,5 +1,6 @@
 import React from 'react';
 import './ChatWindow.css';
+import OutputField from '../OutputField/OutputField';
 
 
 class ChatWindow extends React.Component {
@@ -13,7 +14,7 @@ class ChatWindow extends React.Component {
 
     onKeyUp = (event) => {
         // check if pressed key is enter
-        if((event.which || event.keyCode) === 13){
+        if((event.which || event.keyCode) === 13 && this.state.input.length){
             this.props.sendMessage(this.state.input);
             event.target.value = '';
             this.setState({input: ''});
@@ -45,9 +46,7 @@ class ChatWindow extends React.Component {
                     </ul>
                 </div>
                 <div className="chatBox">
-                    <ul className="outputField">
-                        {this.messageRender(this.props.messages)}
-                    </ul>
+                    <OutputField messages={this.props.messages} className="outputField" />
                     <div className="inputRow">
                         <input onKeyUp={this.onKeyUp} type="text" placeholder="enter text"/>
                     </div>
