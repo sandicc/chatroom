@@ -1,17 +1,45 @@
 .normalH1 {
-    font-size: 2em;
+  font-size: 2em;
+  color: white;
 }
 
 .entryH1 {
-    font-size: 8vw;
-    width: 100%;
-    margin: auto;
+  cursor: pointer;
+  font-size: 8vw;
+  margin: auto;
+  transition-duration: 1s;
+  font-family: MidnightDrive;
+  color: white;
+  z-index: 99;
+}
+
+.textShadow {
+  text-shadow: 0em -0.03em 0 #212121, 0em -0.03em 0 #212121, 0em 0.03em 0 #212121, 0em 0.03em 0 #212121, -0.03em 0em 0 #212121, 0.03em 0em 0 #212121, -0.03em 0em 0 #212121, 0.03em 0em 0 #212121, -0.03em -0.03em 0 #212121, 0.03em -0.03em 0 #212121, -0.03em 0.03em 0 #212121, 0.03em 0.03em 0 #212121, -0.03em 0.09em 0 #212121, 0em 0.09em 0 #212121, 0.03em 0.09em 0 #212121, 0 0.095em 0.005em rgba(0, 0, 0, 0.1), 0 0 0.03em rgba(0, 0, 0, 0.1), 0 0.03em 0.015em rgba(0, 0, 0, 0.3), 0 0.06em 0.03em rgba(0, 0, 0, 0.2), 0 0.09em 0.09em rgba(0, 0, 0, 0.25), 0 0.12em 0.12em rgba(0, 0, 0, 0.2), 0 0.18em 0.18em rgba(0, 0, 0, 0.15);
+}
+
+.entryH1:hover {
+  transform: scale(1.1);
 }
 
 .centerParent {
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@font-face {
+  font-family: GrandHotel;
+  src: url("./GrandHotel-Regular.otf");
+}
+@font-face {
+  font-family: MidnightDrive;
+  src: url("./Midnight_Drive.otf");
+}
+@font-face {
+  font-family: MoonlightsOnTheBeach;
+  src: url("./Moonlights on the Beach.ttf");
+}
+
+/*# sourceMappingURL=Header.css.map */

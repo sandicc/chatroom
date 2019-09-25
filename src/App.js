@@ -6,6 +6,7 @@ import LogIn from './components/LogIn/LogIn';
 import Register from './components/Register/Register';
 import ChatWindow from './components/ChatWindow/ChatWindow';
 import io from 'socket.io-client';
+import Cloud from './components/Cloud/Cloud';
 
 const initialState = {
   route: 'entry',
@@ -121,7 +122,7 @@ class App extends React.Component {
   render () {
     return (
       <div className="App">
-        <div id="background"></div>
+        <Cloud/>
         {this.state.route !== 'entry' 
           ? <Navigation onRouteChange={this.onRouteChange} route={this.state.route} onLogOut={this.onLogOut}/> 
           : null}

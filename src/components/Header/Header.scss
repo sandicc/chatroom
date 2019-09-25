@@ -1,0 +1,68 @@
+$shadowSize: 0.005em;
+
+.normalH1 {
+    font-size: 2em;
+    color: white;
+}
+
+.entryH1 {
+    cursor: pointer;
+    font-size: 8vw;
+    margin: auto;
+    transition-duration: 1s;
+    font-family: MidnightDrive;
+    color: white;
+    z-index: 99;
+}
+
+.textShadow {
+    text-shadow:   0*$shadowSize -6*$shadowSize 0 #212121,  
+    0*$shadowSize -6*$shadowSize 0 #212121,
+    0*$shadowSize  6*$shadowSize 0 #212121,
+    0*$shadowSize  6*$shadowSize 0 #212121,
+   -6*$shadowSize  0*$shadowSize 0 #212121,  
+    6*$shadowSize  0*$shadowSize 0 #212121,
+   -6*$shadowSize  0*$shadowSize 0 #212121,
+    6*$shadowSize  0*$shadowSize 0 #212121,
+   -6*$shadowSize -6*$shadowSize 0 #212121,  
+    6*$shadowSize -6*$shadowSize 0 #212121,
+   -6*$shadowSize  6*$shadowSize 0 #212121,
+    6*$shadowSize  6*$shadowSize 0 #212121,
+   -6*$shadowSize  18*$shadowSize 0 #212121,
+    0*$shadowSize  18*$shadowSize 0 #212121,
+    6*$shadowSize  18*$shadowSize 0 #212121,
+    0 19*$shadowSize 1*$shadowSize rgba(0,0,0,.1),
+    0 0 6*$shadowSize rgba(0,0,0,.1),
+    0 6*$shadowSize 3*$shadowSize rgba(0,0,0,.3),
+    0 12*$shadowSize 6*$shadowSize rgba(0,0,0,.2),
+    0 18*$shadowSize 18*$shadowSize rgba(0,0,0,.25),
+    0 24*$shadowSize 24*$shadowSize rgba(0,0,0,.2),
+    0 36*$shadowSize 36*$shadowSize rgba(0,0,0,.15);
+}
+
+.entryH1:hover {
+    transform:scale(1.1);
+}
+
+.centerParent {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+@font-face {
+    font-family: GrandHotel;
+    src: url('./GrandHotel-Regular.otf') 
+}
+
+@font-face {
+    font-family: MidnightDrive;
+    src: url('./Midnight_Drive.otf') 
+}
+
+@font-face {
+    font-family: MoonlightsOnTheBeach;
+    src: url('./Moonlights on the Beach.ttf') 
+}
