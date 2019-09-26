@@ -33,7 +33,7 @@ class LogInForm extends React.Component {
                 console.log(this.props)
                 this.props.socketInit(this.props.host);
             }else{ 
-                alert('Login failed!!!');
+                this.props.setErrorMSG('⚠️Login failed!!!');
             }
         })
         .catch(err => console.log('error fetching /login'))
@@ -53,6 +53,7 @@ class LogInForm extends React.Component {
                         <label>Password:</label>
                         <input type="password" onChange={this.onPasswordChange} />
                     </div>
+                    <p className='error'>{this.props.errorMSG}</p>
                     <div>
                         <button className='buttonTemp' type="button" onClick={this.onLogin}>Log In</button>
                     </div>

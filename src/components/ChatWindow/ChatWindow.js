@@ -40,7 +40,6 @@ class ChatWindow extends React.Component {
         return (
             <div className="chat">
                 <div className="usersContainer">
-                    <p>Online</p>
                     <ul ref={this.ul} className="usersField">
                         {this.onlineUsersRender(this.props.onlineUsers)}
                     </ul>

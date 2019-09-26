@@ -1,18 +1,13 @@
 import React from 'react';
 import './App.css';
-import Navigation from './components/Navigation/Navigation';
 import Header from './components/Header/Header';
-import LogInForm from './components/LogInForm/LogInForm';
-import RegisterForm from './components/RegisterForm/RegisterForm';
 import LogIn from './components/LogIn/LogIn';
 import io from 'socket.io-client';
 import Cloud from './components/Cloud/Cloud';
 import Home from './components/Home/Home';
-import {CSSTransition} from 'react-transition-group';
 import Register from './components/Register/Register';
 
 const initialState = {
-  route: 'entry',
   messages: [],
   onlineUsers : [],
 };
@@ -20,7 +15,7 @@ const initialState = {
 class App extends React.Component {
   socket = null;
   timeout = 500;
-  host = 'localhost:3002';
+  host = '192.168.100.198:3002';
   user = {
     username: '',
     password: ''
@@ -28,16 +23,15 @@ class App extends React.Component {
 
   constructor() {
     super();
-    this.state = initialState;
-    
+    this.state = {...initialState, route: 'entry', errorMSG: '',};
   }
 
   renderPage(route) {
     switch (route) {
       case 'login':
-        return <LogIn host={this.host} socketInit={this.socketInit} setUser={this.setUser} onRouteChange={this.onRouteChange}/>
+        return <LogIn errorMSG={this.state.errorMSG} host={this.host} socketInit={this.socketInit} setUser={this.setUser} onRouteChange={this.onRouteChange}/>
       case 'register':
-        return <Register host={this.host} socketInit={this.socketInit} setUser={this.setUser} onRouteChange={this.onRouteChange}/>
+        return <Register errorMSG={this.state.errorMSG} host={this.host} socketInit={this.socketInit} setUser={this.setUser} onRouteChange={this.onRouteChange}/>
       case 'home':
         return <Home route={this.state.route} onLogOut={this.onLogOut} sendMessage={this.sendMessage} messages={this.state.messages} onlineUsers={this.state.onlineUsers}/>
       case 'entry':
@@ -74,6 +68,7 @@ class App extends React.Component {
     socket.on('disconnect', (reason) => {
       if (reason === 'io server disconnect') {
         console.log(reason);
+        this.setState({errorMSG:'⚠️User already connected!!!'});
         this.onLogOut();
       }
     })
@@ -93,20 +88,24 @@ class App extends React.Component {
     }
   }
 
+  setErrorMSG = (error) => {
+    this.setState({errorMSG: error});
+  }
+
   onLogOut = () => {
     this.socket.close();
     this.socket = null;
     this.setState(initialState);
-    this.setState({route: 'login'});
+    this.setState({route: 'login'})
     this.user = {
       username: '',
       password: ''
     }
-    this.onRouteChange('login');
   }
 
   onRouteChange = (route) => {
-    this.setState({route: route});
+    this.setState({route: route,
+                  errorMSG: ''});
   }
 
   render () {
@@ -114,8 +113,8 @@ class App extends React.Component {
       <div className="App textShadow">
         <Cloud count={10}/>
         <Header timeout={this.timeout} onRouteChange={this.onRouteChange} route={this.state.route}/>
-        <LogIn timeout={this.timeout} route={this.state.route} host={this.host} socketInit={this.socketInit} setUser={this.setUser} onRouteChange={this.onRouteChange}/>
-        <Register timeout={this.timeout} route={this.state.route} host={this.host} socketInit={this.socketInit} setUser={this.setUser} onRouteChange={this.onRouteChange}/>
+        <LogIn errorMSG={this.state.errorMSG} setErrorMSG={this.setErrorMSG} timeout={this.timeout} route={this.state.route} host={this.host} socketInit={this.socketInit} setUser={this.setUser} onRouteChange={this.onRouteChange}/>
+        <Register errorMSG={this.state.errorMSG} setErrorMSG={this.setErrorMSG} timeout={this.timeout} route={this.state.route} host={this.host} socketInit={this.socketInit} setUser={this.setUser} onRouteChange={this.onRouteChange}/>
         <Home timeout={this.timeout} route={this.state.route} onLogOut={this.onLogOut} sendMessage={this.sendMessage} messages={this.state.messages} onlineUsers={this.state.onlineUsers}/>
       </div>
     )

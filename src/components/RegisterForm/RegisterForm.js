@@ -36,8 +36,15 @@ class RegisterForm extends React.Component {
             if(data.insertSuccessful) {
                 this.props.setUser(this.state.username, this.state.password);
                 this.props.socketInit(this.props.host);
-            }else{ 
-                alert('Register failed!!!');
+            }else{
+                if((typeof data.error) === 'string') {
+                    const i1 = data.error.indexOf('(');
+                    const i2 = data.error.indexOf(')');
+                    const errType = data.error.substring(i1+1, i2);
+                    this.props.setErrorMSG(`⚠️${errType} already used!!!`);
+                }else {
+                    this.props.setErrorMSG('⚠️Failed to register!!!');
+                }
             }
         })
         .catch(err => console.log('error fetching /register'))
@@ -49,7 +56,7 @@ class RegisterForm extends React.Component {
         return (
             <div className='inputForm'>
                 <h2>Register</h2>
-                <form>
+                <div>
                     <div>
                         <label>Username:</label>
                         <input type="text" onChange={this.onUsernameChange} />
@@ -62,11 +69,12 @@ class RegisterForm extends React.Component {
                         <label>Password:</label>
                         <input type="password" onChange={this.onPasswordChange} />
                     </div>
+                    <p className='error'>{this.props.errorMSG}</p>
                     <div>
                         <button  className='buttonTemp' type="button" onClick={this.onRegister}>Register</button>
                     </div>
 
-                </form>
+                </div>
             </div>
         )
     }
