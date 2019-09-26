@@ -3,10 +3,15 @@ import cloud from './cloud-white.png';
 import './Cloud.css';
 
 class Cloud extends React.Component {
+    constructor(props){
+        super(props);
+        this.clouds = createClouds(props.count)
+    }
+
     render(){
         return (
             <div className='container'>
-                {createClouds(10)}
+                {this.clouds}
             </div>
         )
     }

@@ -1,12 +1,16 @@
 import React from 'react';
 import './Header.css';
+import '../../App.css';
+import {CSSTransition} from 'react-transition-group';
 
 
-const Header = ({route, onRouteChange}) => {
+const Header = ({route, onRouteChange, timeout}) => {
     return(
-        route === 'entry'
-            ?  <div className='centerParent'><h1 onClick={() => onRouteChange('login')} className='entryH1 textShadow'>Angels chatroom</h1></div>
-            : <h1 className='normalH1 textShadow'>Angels chatroom</h1>
+            <CSSTransition unmountOnExit in={route === 'entry'} classNames="fade" timeout={timeout}>
+                <div className='centerParent absoluteState'>
+                    <h1 onClick={() => onRouteChange('login')} className='entryH1 textShadow'>Angels chatroom</h1>
+                </div>
+            </CSSTransition>
     )
 }
 

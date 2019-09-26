@@ -5,47 +5,65 @@
     overflow: hidden;
     height: 50vh;
     margin: 0;
+    color: black;
+    text-shadow: 0 0 0;
+    background-color: rgba(255,255,255,0.7);
 }
+
+.usersField {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    overflow: hidden;
+    height: 50vh;
+    margin: 0;
+}
+
 
 .chat {
     display: flex;
     margin: auto;
     width: 70%;
+    box-shadow: 0 0 50px -20px rgba(0,0,0,1);
 }
 
 .usersContainer {
-    border-left: 5px solid black;
+    /* border-left: 5px solid black;
     border-top: 5px solid black;
-    border-bottom: 5px solid black;
+    border-bottom: 5px solid black; */
+    background-color: rgba(0,0,0, .7);
 }
 
 .chatBox {
     width: 100%;
-    border: 5px solid black;
+    /* border: 5px solid black; */
     text-align: left;
+    /* background-image: linear-gradient(to left, blue, lightblue), rgba(0,0,0, 0.5); */
 }
 
 .inputRow {
     padding: 10px;
-    border-top: 5px solid black;
-
+    background-color: rgba(255,255,255, 0.7);
+    border-top: 1px solid black;
 }
 
 .chat input {
     width: 100%;
     border: 0;
     outline: none;
+    background-color: rgba(255,255,255,0);
+   
 }
 
-.outputField > li {
+.chat li {
     /* border: 1px solid grey; */
     margin: 0;
-    padding: 10px;
+    padding: 5px;
     overflow-wrap: break-word;
 }
 
 .chat p {
     margin: 0;
     padding: 5px;
-    border-bottom: 5px solid black;
+    /* border-bottom: 5px solid black; */
 }

@@ -3,7 +3,6 @@
     width: 20em;
     margin: auto;
     padding: 1em;
-    animation: fadeIn 2s infinite alternate-reverse;
 }
 
 .loginContainer  * {
@@ -18,5 +17,7 @@
 .loginContainer h2 {
     margin: 0;
 }
+
+
 
 
