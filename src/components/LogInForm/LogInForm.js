@@ -19,7 +19,7 @@ class LogInForm extends React.Component {
     }
 
     onLogin = () => {
-        fetch(`http://${this.props.host}/login`, {
+        fetch(`${this.props.host}/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -36,7 +36,7 @@ class LogInForm extends React.Component {
                 this.props.setErrorMSG('⚠️Login failed!!!');
             }
         })
-        .catch(err => console.log('error fetching /login'))
+        .catch(err => console.log(err))
 
     }
 

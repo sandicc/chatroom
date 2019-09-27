@@ -25,7 +25,7 @@ class RegisterForm extends React.Component {
     }
 
     onRegister = () => {
-        fetch(`http://${this.props.host}/register`, {
+        fetch(`${this.props.host}/register`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

@@ -15,7 +15,7 @@ const initialState = {
 class App extends React.Component {
   socket = null;
   timeout = 500;
-  host = '192.168.100.198:3002';
+  host = 'http://elmat.synology.me:9999';
   user = {
     username: '',
     password: ''
